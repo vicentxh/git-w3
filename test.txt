@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+
+	<link rel="stylesheet" type="text/css" href="ui/scale.css"/>
+	<link rel="stylesheet" type="text/css" href="ui/css/login.css"/>
+	<link rel="stylesheet" type="text/css" href="ui/css/lang.css"/>
+</head>
+
+
+ <script src="ui/js/gVerify.js"></script>
+ <script src="ui/js/ajax.js"></script>
+ <script>
+	function onbuttionsubmit()
+	{
+		var res = verifyCode.validate(document.getElementById("Verification").value);
+		if(res)
+		{
+			document.getElementById("loginf").submit();
+		}
+		else{
+			alert("验证码错误");
+		}
+	}
+	function langchangeend()
+	{
+		location.href = document.URL;
+	}
+	function onLangChang()
+	{
+		var lang = document.getElementById("langcombox");
+        var url = "./ui/lang/lang.php";
+		var parame = "language=" + lang.value;
+		var callbackFunction = langchangeend;
+		var timeout = 2000;
+		postRequestAjax(url, parame, callbackFunction, timeout);
+	}
+ </script>
+
+<body>
+
+<div id="langselect">
+	<label class="langlabel">语言</label>
+	<select type="submit" id="langcombox" name="langcombox" class="langcombobox" onchange="onLangChang()">
+		<OPTION class="langoption" VALUE="zhCN" selected = 'selected' >简体中文</OPTION>;
+		<OPTION class="langoption" VALUE="enUS" >English</OPTION>;
+		</select>
+</div>
+
+<div id="login_frame">
+ 
+ 
+    <form id="loginf" method="post"  action="./ui/login.php">
+		<p><img id="image_logo1" src="ui/image/VERTIV.png"><span class="VerLine"></span><img id="image_logo2" src="ui/image/Liebert PTM.png"></p>
+		<p><br></p>
+		<p><br></p>
+		<p><br></p>
+        <p><input type="text" id="username" name="username" value="" placeholder="用户名" class="text_field"/></p>
+        <p><input type="password" id="password" name="password" placeholder="密码" class="text_field"/></p>
+		<p>
+			<input type="text" id="Verification" name="Verification" placeholder="验证码"  class="Verification"/>
+			<span id="v_container" class="VerificationCode"></span>
+		</p>
+		<p><br></p>
+		<p><br></p>
+		<p><input type="button" id="btn_login" class="text_field" value="登录" onclick="onbuttionsubmit()"/></p>
+		<!---<p><a id="forget_pwd" href="forget_pwd.html">忘记密码？</a></p>--->
+    </form>
+</div>
+<script>var verifyCode = new GVerify("v_container");</script>
+</body>
+</html>
